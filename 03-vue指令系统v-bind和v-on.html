@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+
+        .active {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <button v-on:click="change_color">切换颜色1</button>
+    <!--v-bind可以绑定标签中的所有属性，如img的src alt等-->
+    <!--<img src="./logo.png" alt="logo">-->
+    <img v-bind:src="img_src" v-bind:alt="img_alt">
+    <div class="box" v-bind:class="{active:isActive}"></div>   <!--动态添加class属性-->
+
+    <!--
+    v-bin可用简便方式表示用  【:】
+    v-on可用简便方式表示用  【@】
+    -->
+
+    <button @click="change_color">切换颜色2</button>
+    <!--v-bind可以绑定标签中的所有属性，如img的src alt等-->
+    <!--<img src="./logo.png" alt="logo">-->
+    <img :src="img_src" :alt="img_alt">
+    <div class="box" :class="{active:isActive}"></div>   <!--动态添加class属性，添加一个属性对象key:value形式-->
+
+</div>
+
+<!--引包-->
+<script src="vue.js"></script>
+
+<!--使用-->
+<script>
+    // 数据驱动视图 MVVM Model View View Model
+    new Vue({
+        el: '#app',
+        data() {
+            // data中是一个函数
+            return {
+                img_src: "./logo.png",
+                img_alt: "我的logo！",
+                isActive: true
+            }
+        },    // 必须return一个对象，可以是一个空对象
+        methods: {
+            change_color() {
+                this.isActive = !this.isActive;
+            }
+        }
+    });
+</script>
+</body>
+</html>
