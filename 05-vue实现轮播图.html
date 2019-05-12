@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-轮播图</title>
+</head>
+<body>
+<div id="app">
+    <img :src="images[current_index].imgSrc" alt="" @click="imgHandler">
+    <br>
+    <div>{{ current_index }}</div>
+    <button @click="prevImg">上一张</button>
+    <button @click="nextImg">下一张</button>
+</div>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({  //vm表示vue实例
+        el: '#app',
+        data() {
+            return {
+                images: [
+                    {id: 1, imgSrc: './static/images/1.jpg'},
+                    {id: 2, imgSrc: './static/images/2.jpg'},
+                    {id: 3, imgSrc: './static/images/3.jpg'},
+                    {id: 4, imgSrc: './static/images/4.jpg'},
+                    {id: 5, imgSrc: './static/images/5.jpg'},
+                    {id: 6, imgSrc: './static/images/6.jpg'},
+                    {id: 7, imgSrc: './static/images/7.jpg'},
+                    {id: 8, imgSrc: './static/images/8.jpg'},
+                ],
+                current_index: 0
+            }
+        },
+        methods: {
+            prevImg() {
+                if (this.current_index == 0){
+                    this.current_index = 8;
+                }
+                this.current_index--;
+            },
+            nextImg() {
+                this.current_index++; //索引+1
+                // 更改图片地址
+                if (this.current_index == 8){
+                    this.current_index = 0;
+                }
+            },
+            imgHandler(e) {
+                console.log(e.target)
+            }
+        }
+    })
+</script>
+</body>
+</html>

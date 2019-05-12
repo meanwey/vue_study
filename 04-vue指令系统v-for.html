@@ -17,11 +17,15 @@
 <body>
 
 <div id="app">
-    <ul>
-        <li>
-
+    <ul v-if="data.status == 'ok'">
+        <!--v-for优先级最高-->
+        <li v-for='(item,index) in data.users' :key="item.id">
+            <h3>{{ item.id }}--{{ item.name }}--{{ item.age }}-----{{ index }}</h3>
         </li>
     </ul>
+    <div v-for="(value,key) in person">   <!-- 先是value，后是key -->
+        {{ key }}----{{ value }}
+    </div>
 </div>
 
 <!--引包-->
@@ -33,14 +37,21 @@
     new Vue({
         el: '#app',
         data() {
-            // data中是一个函数
             return {
-
+                data: {
+                    status: 'ok',
+                    users: [
+                        {id: 1, name: "Meanwey", age: 24},
+                        {id: 2, name: "Jery", age: 25},
+                        {id: 3, name: "Cong", age: 24}
+                    ]
+                },
+                person: {
+                    name: 'Meanwey'
+                }
             }
         },    // 必须return一个对象，可以是一个空对象
-        methods: {
-
-        }
+        methods: {}
     });
 </script>
 </body>
