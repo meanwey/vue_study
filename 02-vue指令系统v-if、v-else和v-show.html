@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        .box2 {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+        }
+        .box3{
+            width: 100%;
+            height: 300px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    {{ add(2,3) }}  <!--可以调用函数-->
+    <button v-on:click="handlerClick">变化</button>
+    <div class="box" v-show="isShow"></div>  <!--通过display来控制是否显示-->
+    <div class="box2" v-if="isShow">有了</div>   <!--通过dom对象创建和删除-->
+    <div class="box3" v-else>没了</div>    <!--与v-if相反，此消彼长-->
+    <!--
+    v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+    v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+    相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+    一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；
+    如果在运行时条件很少改变，则使用 v-if 较好。
+    -->
+</div>
+
+<!--引包-->
+<script src="vue.js"></script>
+
+<!--使用-->
+<script>
+    new Vue({
+        el: '#content',
+        data() {
+            // data中是一个函数
+            return {
+                msg: "<h2>来自vue的标签</h2>",
+                isShow: true   // 1==1  等同于true
+            }    // 必须return一个对象，可以是一个空对象
+        },
+        methods: {
+            add(x, y) {
+                return x + y;
+            },
+            handlerClick() {
+                // 数据驱动
+                this.isShow = !this.isShow;    // this代指实例化的Vue对象
+            }
+        }    // 用于声明函数
+    });
+</script>
+</body>
+</html>
