@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vue-ajax</title>
     <style>
-        span.active{
+        span.active {
             color: cornflowerblue;
         }
     </style>
@@ -15,10 +15,14 @@
 <body>
 <div id="app">
     <div>
-        <span @click="handlerClick(index)" v-for="(category,index) in categoryList" :key="category.id" :class="{active:index==current_index}">
+        <span @click="handlerClick(index,category.id)" v-for="(category,index) in categoryList" :key="category.id"
+              :class="{active:index==current_index}">
             {{ category.name }}
         </span>
     </div>
+    <ul>
+        <li></li>
+    </ul>
 </div>
 
 <script src="jquery-3.3.1.js"></script>
@@ -33,15 +37,24 @@
             }
         },
         methods: {
-            handlerClick(index) {
+            handlerClick(index, id) {
                 this.current_index = index;
+                // 发起请求
+                $.ajax({
+                    url: `https://www.luffycity.com/api/v1/courses/?sub_category=${id}`,   // 用反引号模版语言传值
+                    type: 'get',
+                    success: (data) => {
+                        var data = data.data;
+                        console.log(data);
+                    }
+                })
             }
         },
         created() {    // vm对象创建完成即执行函数
             $.ajax({
                 url: "https://www.luffycity.com/api/v1/course_sub/category/list/",
                 type: "get",
-                success: (data)=> {
+                success: (data) => {
                     // console.log(data);
                     if (data.error_no === 0) {
                         var data = data.data;

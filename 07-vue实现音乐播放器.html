@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-音乐播放器</title>
+</head>
+<style>
+    ul li.active{
+        background-color: cornflowerblue;
+    }
+</style>
+<body>
+
+<div id="music">
+    <!--ended方法会在音频播放完毕自动执行-->
+    <audio :src="musicData[current_index].musicSrc" controls autoplay @ended="nextPlay"></audio>
+    <ul>
+        <li @click="musicPlay(index)" v-for="(music,index) in musicData" :key="index" :class="{active:index===current_index}">
+            <p>{{ music.title }}</p>
+        </li>
+    </ul>
+</div>
+<script src="vue.js"></script>
+<script>
+    var musicList = [{
+        title: "尤长靖,那吾克热LIL-EM - 飘向北方 (Live)",
+        musicSrc: "static/music/尤长靖,那吾克热LIL-EM - 飘向北方 (Live).mp3"
+    },
+        {
+        title: "张杰,张碧晨 - 只要平凡",
+        musicSrc: "static/music/张杰,张碧晨 - 只要平凡.mp3"
+    },
+        {
+        title: "李志 - 你离开了南京，从此没有人和我说话",
+        musicSrc: "static/music/李志 - 你离开了南京，从此没有人和我说话.mp3"
+    },
+        {
+        title: "韩红,林俊杰 - 飞云之下",
+        musicSrc: "static/music/韩红,林俊杰 - 飞云之下.mp3"
+    }];
+
+    new Vue({
+        el: "#music",
+        data() {
+            return {
+                musicData: [],
+                current_index: 0
+            }
+        },
+        methods: {
+            musicPlay(index) {
+                this.current_index = index;
+            },
+            nextPlay() {
+                this.current_index++;
+                if (this.current_index==musicList.length){
+                    this.current_index = 0;
+                }
+            }
+        },
+        created() {
+            this.musicData = musicList;
+        }
+    })
+</script>
+</body>
+</html>
