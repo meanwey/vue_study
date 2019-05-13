@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-ajax</title>
+    <style>
+        span.active{
+            color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div>
+        <span @click="handlerClick(index)" v-for="(category,index) in categoryList" :key="category.id" :class="{active:index==current_index}">
+            {{ category.name }}
+        </span>
+    </div>
+</div>
+
+<script src="jquery-3.3.1.js"></script>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({  //vm表示vue实例
+        el: '#app',
+        data() {
+            return {
+                categoryList: [],
+                current_index: 0
+            }
+        },
+        methods: {
+            handlerClick(index) {
+                this.current_index = index;
+            }
+        },
+        created() {    // vm对象创建完成即执行函数
+            $.ajax({
+                url: "https://www.luffycity.com/api/v1/course_sub/category/list/",
+                type: "get",
+                success: (data)=> {
+                    // console.log(data);
+                    if (data.error_no === 0) {
+                        var data = data.data;
+                        let obj = {
+                            id: 0,
+                            name: "全部",
+                            category: 0,
+                            hidden: false
+                        };
+                        this.categoryList = data;
+                        this.categoryList.unshift(obj);    // unshift可将对象插入列表首位
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

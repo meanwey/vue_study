@@ -15,6 +15,8 @@
     <button @click="prevImg">上一张</button>
     <button @click="nextImg">下一张</button>
 </div>
+
+<script src="jquery-3.3.1.js"></script>
 <script src="vue.js"></script>
 <script>
     let vm = new Vue({  //vm表示vue实例
@@ -36,7 +38,7 @@
         },
         methods: {
             prevImg() {
-                if (this.current_index == 0){
+                if (this.current_index == 0) {
                     this.current_index = 8;
                 }
                 this.current_index--;
@@ -44,13 +46,23 @@
             nextImg() {
                 this.current_index++; //索引+1
                 // 更改图片地址
-                if (this.current_index == 8){
+                if (this.current_index == 8) {
                     this.current_index = 0;
                 }
             },
             imgHandler(e) {
                 console.log(e.target)
             }
+        },
+        created() {
+            // this指向问题，能用箭头函数就尽量不要用匿名函数
+            setInterval(() => {   // 箭头函数的this代指当前对象的父级对象，也就是vm的vue对象
+                // console.log(this)
+                this.current_index++;
+                if (this.current_index == 8) {
+                    this.current_index = 0;
+                }
+            }, 2000)
         }
     })
 </script>
