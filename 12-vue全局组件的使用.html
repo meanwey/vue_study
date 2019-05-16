@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue全局组件的使用</title>
+</head>
+<body>
+
+<div id="app">
+    {{ msg }}
+</div>
+<script src="vue.js"></script>
+<script>
+
+    // 第一个参数是组件名字，第二个参数是options
+    Vue.component('Vbtn',{
+        data() {
+            return {
+
+            }
+        },
+        template: `<button><slot></slot></button>`   // 使用slot内置组件分发内容
+    });
+
+    let Vheader = {
+        data() {
+            return {}
+        },
+        template: `
+            <div id="a">
+                <h2>明天</h2>
+                <Vbtn>显示</Vbtn>
+            </div>
+        `
+    };
+
+    new Vue({
+        // 如果仅仅是实例化vue对象中既有el又有template，如果template中定义模版的内容优先级大于el
+        el: "#app",
+        data() {
+            return {
+                msg: '小明同学'
+            }
+        },
+        // 3 用子，若没有template，则挂载至el绑定的对象
+        template: `
+            <div class="app">
+                <Vheader></Vheader>
+                <br>
+                <hr>
+                <Vbtn>登录</Vbtn>
+                <Vbtn>注册</Vbtn>
+            </div>
+        `,
+        components: {
+            // 2 挂子
+            // 如果key和value相同，可以只写一个
+            // App: App
+            Vheader
+        }
+    })
+</script>
+
+</body>
+</html>

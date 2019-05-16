@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue子组件向父组件传值</title>
+</head>
+<body>
+
+<div id="app">
+    {{ msg }}
+</div>
+<script src="vue.js"></script>
+<script>
+    let Vheader = {
+        data() {
+            return {}
+        },
+        // 使用props挂载（声明）父组件的属性
+        props: ["msg"],
+        template: `
+            <div id="a">
+                <h2>明天</h2>
+                <h2>{{ msg }}</h2>
+            </div>
+        `
+    };
+
+    let App = {
+        data() {
+            return {
+                text: "我是父组件"
+            };
+        },
+        template: `
+            <div id="a">
+                <Vheader :msg="text"></Vheader>
+            </div>
+        `,
+        components: {
+            Vheader
+        }
+    };
+
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                msg: '小明同学'
+            }
+        },
+        template: `
+            <div class="app">
+                <App></App>
+            </div>
+        `,
+        components: {
+            App
+        }
+    })
+</script>
+
+</body>
+</html>
