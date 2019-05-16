@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue计算属性</title>
+</head>
+<body>
+<div id="app">
+    <p>{{ changePmsg }}</p>
+    <button @click="changeMsg">修改</button>
+</div>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                name: "小明同学！",
+                age: 24
+            }
+        },
+        methods: {
+            // 在methods中不要用箭头函数
+            changeMsg() {
+                this.name = '田二翔~';
+                this.age = 30;
+            }
+        },
+        computed: {
+            changePmsg: function () {
+                // 计算属性默认只有getter方法
+                return `我的名字是：${this.name}，今天${this.age}岁~`
+            }
+        }
+    })
+</script>
+</body>
+</html>
