@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue生命周期的钩子函数</title>
+</head>
+<body>
+<div id="app">
+    <Test></Test>
+</div>
+<script src="vue.js"></script>
+<script>
+    let Test = {
+        data() {
+            return {
+                msg: "Hello"
+            }
+        },
+        template: `
+            <div>我是test组件</div>
+        `,
+        beforeCreate() {
+
+            // 组件创建之前
+
+            console.log(this);
+
+        },
+        created() {
+
+            // 组件创建之后
+
+            // 使用该组件，就会触发以上的钩子函数，created中可以操作数据，发送ajax，并且可以实现vue==》页面的影响  应用：发送ajax请求
+
+            console.log(this.msg);
+
+            // this.msg = '嘿嘿黑';
+
+        },
+        beforeMount() {
+
+            // 装载数据到DOM之前会调用
+
+            console.log(document.getElementById('app'));
+
+        },
+
+        mounted() {
+
+            // 这个地方可以操作DOM
+
+            // 装载数据到DOM之后会调用 可以获取到真实存在的DOM元素，vue操作以后的DOM
+
+            console.log(document.getElementById('app'));
+
+        },
+
+        beforeUpdate() {
+
+            // 在更新之前，调用此钩子，应用：获取原始的DOM
+
+            console.log(document.getElementById('app').innerHTML);
+
+        },
+
+        updated() {
+
+            // 在更新之前，调用此钩子，应用：获取最新的DOM
+
+            console.log(document.getElementById('app').innerHTML);
+
+        },
+
+        beforeDestroy() {
+
+            console.log('beforeDestroy');
+
+        },
+
+        destroyed() {
+
+            console.log('destroyed');
+
+        },
+
+        activated() {
+
+            console.log('组件被激活了');
+
+        },
+
+        deactivated() {
+
+            console.log('组件被停用了');
+
+        }
+    };
+    new Vue({
+        el: "#app",
+        data() {
+            return {}
+        },
+        components: {
+            Test
+        }
+    })
+</script>
+
+
+</body>
+</html>

@@ -14,16 +14,40 @@
 </div>
 <script src="vue.js"></script>
 <script>
+    Vue.component("Vbtn",{
+        data() {
+            return {
+
+            };
+        },
+        props: ["msg"],
+        methods: {
+            clickHandler() {
+                // this.$emit("父组件的自定义事件","传值")
+
+            }
+        },
+        template: `<button @click="clickHandler">
+                        {{ msg }}
+                    </button>`
+    });
+
     let Vheader = {
         data() {
             return {}
         },
         // 使用props挂载（声明）父组件的属性
         props: ["msg"],
+        methods: {
+            clickHandler() {
+                this.msg = "我变了"
+            }
+        },
         template: `
             <div id="a">
                 <h2>明天</h2>
                 <h2>{{ msg }}</h2>
+                <Vbtn>{{ msg }}</Vbtn>
             </div>
         `
     };
