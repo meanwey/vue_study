@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>18-vue-router的基本使用</title>
+</head>
+<body>
+<div id="app">
+
+</div>
+
+
+<script src="vue.js"></script>
+<script src="vue-router.js"></script>
+<script>
+    const Home = {
+        data() {
+            return {}
+        },
+        template: `<div>我是首页</div>`
+    };
+
+    const Course = {
+        data() {
+            return {}
+        },
+        template: `<div>我是免费课程</div>`
+    };
+    // 创建并定义路由
+    const router = new VueRouter({
+        // 定义路由规则
+        routes: [
+            {path: "/", redirect: "/home"},   // 重定向
+            {path: "/home", component: Home},
+            {path: "/course", component: Course}
+        ]
+    });
+
+
+    let App = {
+        data() {
+            return {};
+        },
+        // router-link和router-view是vue-router的全剧组件
+        // router-view是路由组件的出口
+        template: `
+            <div>
+                <div class="header">
+                    <router-link to="/">首页</router-link>
+                    <router-link to="/course">免费课程</router-link>
+                </div>
+                <router-view></router-view>
+            </div>
+        `
+    };
+    new Vue({
+        el: "#app",
+        router,  // 挂载路由对象
+        data() {
+            return {}
+        },
+        template: `<App></App>`,
+        components: {
+            App
+        }
+    })
+</script>
+
+</body>
+</html>
